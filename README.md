@@ -1,3 +1,3 @@
 # webpage
 
-[to webpage](/index.php)
+[to webpage](https://pluers.github.io/index.php)
