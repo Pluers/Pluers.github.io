@@ -34,8 +34,8 @@
             echo "current month " . $RTMONTH . " is the same as the input month " . $inputMonth;
         } else {
             echo "current month " . $RTMONTH . " is not the same as the input month " . $inputMonth;
-            var_dump($_POST["Maand"]);
-            var_dump($RTMONTH);
+            var_dump("Input month: " . $_POST["Maand"]);
+            var_dump("Real time month: " . $RTMONTH);
         }
         ?>
 
