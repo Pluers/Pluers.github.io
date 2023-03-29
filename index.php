@@ -38,11 +38,23 @@
             var_dump("Real time month: " . $RTMONTH);
         }
         ?>
-
+        <br>
+        <br>
+        <br>
         <table>
-
+            <tr>
+                <th>Band name</th>
+                <th>Date</th>
+                <th>Price</th>
+            </tr>
+            <tr>
+                <td>the band</td>
+                <td>time</td>
+                <td>money</td>
+            </tr>
         </table>
-
+        <a href="./pages/create_event.php">create event</a>
+        <a href="./pages/create_band.php">add a band</a>
     </body>
 
 </html>
