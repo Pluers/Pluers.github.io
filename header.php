@@ -3,14 +3,14 @@
 
     <style>
         :root {
-            --navbar-padding: 10px;
+            --navbar-padding: 1rem;
             --border-radius: 11px;
             --border-radius-small: 6px;
             --navbar-height: 14px;
             --navbar-main-color: #e4e4e4;
             --navbar-admin-color: #c4f3ff;
             --button-transition: filter ease-in-out 0.2s;
-            --button-filter-brightness: brightness(0.8);
+            --button-filter-brightness: brightness(0.9);
         }
 
         body {
