@@ -61,28 +61,40 @@
             -webkit-transition: var(--button-transition);
         }
 
-        /* Admin bar */
+        /* Admin */
 
         .admin_panel {
             background-color: var(--navbar-admin-color);
             border-radius: var(--border-radius-small);
             position: absolute;
             right: 0;
-            top: -2.5px;
+            top: 0;
         }
 
 
-
-        .create_items {
-            margin: 0 6px;
-        }
-
-        .create_items div a {
-            padding: 0 10px;
-            margin: 4px 0;
-        }
 
         /*buttons */
+        .admin_panel li {
+            margin: 0 5px;
+        }
+
+        .admin_panel li,
+        .admin_panel li a {
+            -webkit-transition: var(--button-transition);
+        }
+
+        .admin_panel li:hover,
+        .admin_panel li a:hover {
+            filter: var(--button-filter-brightness);
+            -webkit-transition: var(--button-transition);
+        }
+
+        .link_event_band,
+        .link_event_band a {
+            background-color: #a6affe;
+            color: #000b67;
+        }
+
         .create_event,
         .create_event a {
             background-color: #feeca6;
@@ -100,25 +112,6 @@
             background-color: #ff8b8b;
             color: #7a0000;
         }
-
-        .create_event,
-        .create_event a,
-        .create_band,
-        .create_band a,
-        .login,
-        .login a {
-            -webkit-transition: var(--button-transition);
-        }
-
-        .create_event:hover,
-        .create_event a:hover,
-        .create_band:hover,
-        .create_band a:hover,
-        .login:hover,
-        .login a:hover {
-            filter: var(--button-filter-brightness);
-            -webkit-transition: var(--button-transition);
-        }
     </style>
 
     <head>
@@ -129,13 +122,14 @@
                 </li>
             </ul>
             <ul class="admin_panel">
-                <li class="create_items">
-                    <div class="create_event">
-                        <a href="/Pluers.github.io/pages/create_event.php">Create Event</a>
-                    </div>
-                    <div class="create_band">
-                        <a href="/Pluers.github.io/pages/create_band.php">Create Band</a>
-                    </div>
+                <li class="link_event_band">
+                    <a href="/Pluers.github.io/pages/link_event_band.php">Link Event & Band</a>
+                </li>
+                <li class="create_event">
+                    <a href="/Pluers.github.io/pages/create_event.php">Create Event</a>
+                </li>
+                <li class="create_band">
+                    <a href="/Pluers.github.io/pages/create_band.php">Create Band</a>
                 </li>
                 <li class="login">
                     <a href="/Pluers.github.io/admin/login.php">log in</a>
