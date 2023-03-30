@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html>
 
+    <head>
+        <?php include_once("header.php") ?>
+    </head>
+
     <body>
 
         <h1>Agenda
@@ -29,14 +33,22 @@
 
         <?php
         $RTMONTH = date("F", strtotime('m'));
-        $inputMonth = $_POST["Maand"];
-        if ($_POST["Maand"] === $RTMONTH) {
-            echo "current month " . $RTMONTH . " is the same as the input month " . $inputMonth;
-        } else {
-            echo "current month " . $RTMONTH . " is not the same as the input month " . $inputMonth;
-            var_dump("Input month: " . $_POST["Maand"]);
-            var_dump("Real time month: " . $RTMONTH);
+        if (!empty($_POST["Maand"])) {
+            $inputMonth = $_POST["Maand"];
+            if ($inputMonth == !null) {
+                if ($_POST["Maand"] === $RTMONTH) {
+                    echo "current month " . $RTMONTH . " is the same as the input month " . $inputMonth;
+                } else {
+                    echo "current month " . $RTMONTH . " is not the same as the input month " . $inputMonth;
+                    var_dump("Input month: " . $_POST["Maand"]);
+                    var_dump("Real time month: " . $RTMONTH);
+                }
+            } else {
+                var_dump($inputMonth);
+            }
         }
+
+
         ?>
         <br>
         <br>

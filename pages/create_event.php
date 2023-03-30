@@ -2,6 +2,7 @@
 <html>
 
     <head>
+        <?php include_once("../header.php") ?>
         <h1>Create Event</h1>
     </head>
 
