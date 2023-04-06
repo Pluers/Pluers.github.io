@@ -6,33 +6,34 @@
         <link rel="stylesheet" href="/Pluers.github.io/style/index.css">
     </head>
 
+    <div class="debug">
+        <!-- connection test -->
+        <?php
 
-    <!-- connection test -->
-    <?php
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $dbname = "EasyTiger-Patio";
 
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "EasyTiger-Patio";
+        // Create connection
+        $conn = new mysqli($servername, $username, $password, $dbname);
+        // Check connection
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
 
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+        $sql = "INSERT INTO band (idband, naam, genre) VALUES ('0', 'Band name example', 'Pop')";
+        // $sql = "DELETE FROM band WHERE idband = ''";
+        
+        if ($conn->query($sql) === TRUE) {
+            echo "New record created successfully";
+        } else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
 
-    $sql = "INSERT INTO band (idband, naam, genre)
-VALUES ('2', 'Band name 2', 'Pop')";
-
-    if ($conn->query($sql) === TRUE) {
-        echo "New record created successfully";
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
-    }
-
-    $conn->close();
-    ?>
+        $conn->close();
+        ?>
+    </div>
 
     <body>
 
