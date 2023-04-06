@@ -22,9 +22,9 @@
             die("Connection failed: " . $conn->connect_error);
         }
 
-        $sql = "INSERT INTO band (idband, naam, genre) VALUES ('0', 'Band name example', 'Pop')";
-        // $sql = "DELETE FROM band WHERE idband = ''";
-        
+        // $sql = "INSERT INTO band (idband, naam, genre) VALUES ('', 'Band name example 2', 'Pop')";
+        $sql = "DELETE FROM band WHERE idband = '0'";
+
         if ($conn->query($sql) === TRUE) {
             echo "New record created successfully";
         } else {

@@ -52,12 +52,12 @@ div {
 /*calendar button */
 .calendar:hover {
     filter: var(--button-filter-brightness);
-    -webkit-transition: var(--button-transition);
+    transition: var(--button-transition);
 }
 
 .calendar {
     background-color: grey;
-    -webkit-transition: var(--button-transition);
+    transition: var(--button-transition);
 }
 
 /* Admin */
@@ -78,13 +78,13 @@ div {
 
 .admin_panel li,
 .admin_panel li a {
-    -webkit-transition: var(--button-transition);
+    transition: var(--button-transition);
 }
 
 .admin_panel li:hover,
 .admin_panel li a:hover {
     filter: var(--button-filter-brightness);
-    -webkit-transition: var(--button-transition);
+    transition: var(--button-transition);
 }
 
 .link_event_band,
