@@ -4,12 +4,11 @@
 
     <body>
         <form action="" method="post">
-            <label for="email">Email</label>
-            <input id="email" type="text"></input><br>
-            <label for="password">Password</label>
-            <input id="password" type="text"></input><br>
+            <input type="text">email</input>
+            <input type="text">password</input>
             <input type="submit">
         </form>
+        <php ?>
     </body>
 
 </html>
