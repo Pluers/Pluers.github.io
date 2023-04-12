@@ -1,34 +1,34 @@
+<?php include('../connection.php') ?>
 <!DOCTYPE html>
-<?php include_once("../header.php"); ?>
 <html>
 
+    <head>
+        <title>Registration system PHP and MySQL</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+
     <body>
-        <form action="" method="post">
-            <input type="text">email</input>
-            <input type="text">password</input>
-            <input type="submit">
+        <div class="header">
+            <h2>Login</h2>
+        </div>
+
+        <form method="post" action="login.php">
+            <?php include('errors.php'); ?>
+            <div class="input-group">
+                <label>Username</label>
+                <input type="text" name="username">
+            </div>
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" name="password">
+            </div>
+            <div class="input-group">
+                <button type="submit" class="btn" name="login_user">Login</button>
+            </div>
+            <p>
+                Not yet a member? <a href="register.php">Sign up</a>
+            </p>
         </form>
-        <?php
-
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "EasyTiger-Patio";
-        $sql = "SELECT email FROM admin";
-
-        $conn = new mysqli($servername, $username, $password, $dbname);
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
-        //This is now an array, have to convert it or have it search through database table to search if correct email has been entered
-        if ($conn->query($sql) === $_POST["email"]) {
-            echo "email correct";
-        } else {
-            echo "Error: " . $sql . "<br>" . $conn->error;
-        }
-
-        $conn->close();
-        ?>
     </body>
 
 </html>
