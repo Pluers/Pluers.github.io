@@ -1,3 +1,11 @@
+<?php
+include_once("../header.php");
+include('../connection.php');
+if (!isset($_SESSION['username'])) {
+    $_SESSION['msg'] = "You must log in to access this page";
+    header('location: /Pluers.github.io/admin/login.php');
+}
+?>
 <!DOCTYPE html>
 <html>
 

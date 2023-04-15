@@ -1,3 +1,4 @@
+/* VARIABLES */
 :root {
     --navbar-padding: 1rem;
     --border-radius: 11px;
@@ -15,7 +16,7 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Main bar */
+/* MAIN NAV BAR */
 ul {
     list-style-type: none;
     margin: unset;
@@ -48,8 +49,7 @@ div {
     border-radius: var(--border-radius-small);
 }
 
-/*buttons */
-/*calendar button */
+/* BUTTONS */
 .calendar:hover {
     filter: var(--button-filter-brightness);
     transition: var(--button-transition);
@@ -57,10 +57,11 @@ div {
 
 .calendar {
     background-color: grey;
+    color: #fff;
     transition: var(--button-transition);
 }
 
-/* Admin */
+/* ADMIN */
 
 .admin_panel {
     border-radius: var(--border-radius-small);
@@ -69,9 +70,6 @@ div {
     top: 0;
 }
 
-
-
-/*buttons */
 .admin_panel li {
     margin: 0 5px;
 }
@@ -109,4 +107,37 @@ div {
 .login a {
     background-color: #ff8b8b;
     color: #7a0000;
+}
+
+.account,
+.account a {
+    background-color: #ff98ee;
+    color: #7a0074;
+}
+
+/* ICONS */
+.fluent-icons-filled-20,
+.fluent-icons-regular-20,
+.fluent-icons-20 {
+    vertical-align: bottom;
+}
+
+.icon-guitar:before {
+    content: "\e900";
+}
+
+.icon-clock:before {
+    content: "\e904";
+}
+
+.icon-mail:before {
+    content: "\e903";
+}
+
+.icon-receipt_add:before {
+    content: "\e908";
+}
+
+.icon-merge:before {
+    content: "\e909";
 }

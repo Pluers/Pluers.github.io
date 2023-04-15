@@ -1,5 +1,5 @@
 <?php
-session_start();
+include_once('header.php');
 
 // initializing variables
 $username = "";
@@ -87,4 +87,51 @@ if (isset($_POST['login_user'])) {
     }
 }
 
-?>
+// Create Band
+if (isset($_POST['create_band'])) {
+    // receive all input values from the form
+    $bandname = mysqli_real_escape_string($db, $_POST['bandname']);
+    $genre = mysqli_real_escape_string($db, $_POST['genre']);
+    $herkomst = mysqli_real_escape_string($db, $_POST['herkomst']);
+    $omschrijving = mysqli_real_escape_string($db, $_POST['omschrijving']);
+
+    // form validation: ensure that the form is correctly filled ...
+    // by adding (array_push()) corresponding error unto $errors array
+    if (empty($bandname)) {
+        array_push($errors, "bandname is required");
+    }
+    if (empty($genre)) {
+        array_push($errors, "genre is required");
+    }
+    if (empty($herkomst)) {
+        array_push($errors, "herkomst is required");
+    }
+    if (empty($omschrijving)) {
+        array_push($errors, "omschrijving is required");
+    }
+
+    // first check the database to make sure 
+    // a band does not already exist with the same bandname 
+    $band_check_query = "SELECT * FROM band WHERE bandname='$bandname' OR herkomst='$herkomst' LIMIT 1";
+    $result = mysqli_query($db, $band_check_query);
+    $band = mysqli_fetch_assoc($result);
+
+    if ($band) { // if user exists
+        if ($band['bandname'] === $bandname) {
+            array_push($errors, "bandname already exists");
+        }
+
+        if ($band['herkomst'] === $herkomst) {
+            array_push($errors, "herkomst already exists");
+        }
+    }
+
+    // Finally, register band if there are no errors in the form
+    if (count($errors) == 0) {
+
+        $query = "INSERT INTO band (bandname, genre, herkomst, omschrijving) 
+  			  VALUES('$bandname', '$genre', '$herkomst', '$omschrijving')";
+        mysqli_query($db, $query);
+        header('location: link_event_band.php');
+    }
+}

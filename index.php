@@ -3,45 +3,32 @@
 
     <head>
         <?php include_once("header.php") ?>
+        <?php include('connection.php') ?>
         <link rel="stylesheet" href="/Pluers.github.io/style/index.css">
+        <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/gh/wazybr/fluentui-system-icons-font/webfonts/css/fluent-icons-filled-20.css">
     </head>
-
-    <div class="debug">
-        <!-- connection test -->
-        <?php
-
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "EasyTiger-Patio";
-
-        // Create connection
-        $conn = new mysqli($servername, $username, $password, $dbname);
-        // Check connection
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
-
-        // $sql = "INSERT INTO band (idband, naam, genre) VALUES ('', 'Band name example 2', 'Pop')";
-        $sql = "DELETE FROM band WHERE idband = '0'";
-
-        if ($conn->query($sql) === TRUE) {
-            echo "New record created successfully";
-        } else {
-            echo "Error: " . $sql . "<br>" . $conn->error;
-        }
-
-        $conn->close();
-        ?>
-    </div>
 
     <body>
 
-        <h1>Agenda
+        <h1>
+            Agenda
             <?php echo date("F", strtotime('m'));
             echo date(" Y", strtotime('m')); ?>
         </h1>
-        <p>Aantal Events: 0</p>
+        <p>Aantal Events:
+            <!-- Search for event count -->
+            <?php
+            $sql = "SELECT * FROM event";
+            if ($result = mysqli_query($db, $sql)) {
+                // Return the number of rows in result set
+                $rowcount = mysqli_num_rows($result);
+                printf("%d ", $rowcount);
+                // Free result set
+                mysqli_free_result($result);
+            }
+            ?>
+        </p>
         <form action="" method="post">
             <select name="Maand" id="month">
                 <option value="Default" disabled selected>Select a month</option>
@@ -84,45 +71,71 @@
         echo "<table style='border: solid 1px black;'>";
         echo "<tr><th>Id</th><th>BandName</th><th></th><th>Genre</th></tr>";
 
-        class TableRows extends RecursiveIteratorIterator
+        function show_records($mysql_link)
         {
-            function __construct($it)
-            {
-                parent::__construct($it, self::LEAVES_ONLY);
-            }
+            date_default_timezone_set('Europe/London');
+            $today = date('Y/m/d');
+            $future = date('Y-m-d', strtotime("+10 months", strtotime($today)));
 
-            function current()
-            {
-                return "<td style='width:150px;border:1px solid black;'>" . parent::current() . "</td>";
-            }
 
-            function beginChildren()
-            {
-                echo "<tr>";
-            }
+            $q = "SELECT number,startdate,traction,tourname,start,fares,tourcompany
+                    FROM specials
+                    WHERE startdate>='$today' AND startdate<='$future' AND steam='y'
+                    ORDER BY startdate";
 
-            function endChildren()
-            {
-                echo "</tr>" . "\n";
+
+            $r = mysqli_query($mysql_link, $q);
+            $lastmonth = "";
+            if ($r) {
+                echo "<Table id='customers'>
+                <tr>
+                <th>Date</th>
+                <th>Locomotive</th>
+                <th>Organiser</th>
+                <th>Name</th>
+                <th>Pick Up Points</th>
+                <th>Destination</th>
+                <th>Fares</th>
+                </tr>";
+
+                while ($row = mysqli_fetch_array($r, MYSQLI_ASSOC)) {
+                    $parts = explode('-', $row['startdate']);
+                    $timestamp = strtotime($row['startdate']);
+                    $parts2 = date('YM', $timestamp);
+
+                    if (empty($lastmonth) || $lastmonth != $parts2) {
+
+                        if (!empty($lastmonth)) {
+                            echo '</table>';
+                        }
+                        echo "<h1>$parts2</h1>";
+                        echo "<table id='customers'>";
+                        $lastmonth = $parts2;
+
+
+                        echo "<tr>";
+                        echo "<td>" . $parts2 . "</td>";
+                        echo "<td>" . $row['traction'] . "</td>";
+                        echo "<td>" . $row['tourcompany'] . "</td>";
+                        echo "<td>" . $row['tourname'] . "</td>";
+                        echo "<td>" . $row['start'] . "</td>";
+                        echo "<td>" . $row['end'] . "</td>";
+                        echo "<td>" . $row['fares'] . "</td>";
+                        echo "</tr>";
+
+                    }
+                    echo "</Table>";
+                }
+
+            } else {
+                echo '<p>' . mysqli_error($mysql_link) . '</p>';
             }
         }
+        show_records($mysql_link);
 
-        try {
-            $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $stmt = $conn->prepare("SELECT * FROM band");
-            $stmt->execute();
+        mysqli_close($mysql_link);
 
-            // set the resulting array to associative
-            $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
-            foreach (new TableRows(new RecursiveArrayIterator($stmt->fetchAll())) as $k => $v) {
-                echo $v;
-            }
-        } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage();
-        }
-        $conn = null;
-        echo "</table>";
+        ?>
         ?>
         <br>
         <br>

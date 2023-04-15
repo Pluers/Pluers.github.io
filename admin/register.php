@@ -1,3 +1,4 @@
+<?php include("../header.php") ?>
 <?php include('../connection.php') ?>
 <!DOCTYPE html>
 <html>
