@@ -1,7 +1,8 @@
 <?php
 include_once("../header.php");
 include('../connection.php');
-if (!isset($_SESSION['username'])) {
+if ($_SESSION['username'] == 'Admin' || $_SESSION['username'] == 'admin') {
+} else {
     $_SESSION['msg'] = "You must log in to access this page";
     header('location: /Pluers.github.io/admin/login.php');
 }
@@ -10,113 +11,45 @@ if (!isset($_SESSION['username'])) {
 <html>
 
     <head>
-        <title>Create Event</title>
+        <h1>Link event & band</h1>
     </head>
+
 
     <body>
         <form action="" method="post">
+            <?php include('../admin/errors.php'); ?>
             <select name="Band" id="band">
                 <option value="Default" disabled selected>Select a band</option>
                 <?php
 
+                $sql = "SELECT bandname FROM band";
+                $sqlresult = mysqli_query($db, $sql);
 
-                $servername = "localhost";
-                $username = "root";
-                $password = "";
-                $dbname = "EasyTiger-Patio";
-
-                class bandRows extends RecursiveIteratorIterator
-                {
-                    function __construct($it)
-                    {
-                        parent::__construct($it, self::LEAVES_ONLY);
-                    }
-
-                    function current()
-                    {
-                        return "<td style='width:150px;border:1px solid black;'>" . parent::current() . "</td>";
-                    }
-
-                    function beginChildren()
-                    {
-                        echo "<option value='1'>";
-                    }
-
-                    function endChildren()
-                    {
-                        echo "</option>" . "\n";
-                    }
+                $rows = mysqli_fetch_all($sqlresult, MYSQLI_ASSOC);
+                foreach ($rows as $row) {
+                    echo ("<option value='1'>" . $row["bandname"] . "</option>" . "\n");
+                    echo $row;
                 }
-
-                try {
-                    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-                    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                    $stmt = $conn->prepare("SELECT bandname FROM band");
-                    $stmt->execute();
-
-                    // set the resulting array to associative
-                    $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
-                    foreach (new bandRows(new RecursiveArrayIterator($stmt->fetchAll())) as $k => $v) {
-                        echo $v;
-                    }
-                } catch (PDOException $e) {
-                    echo "Error: " . $e->getMessage();
-                }
-                $conn = null;
                 ?>
             </select><br>
             <select name="Event" id="event">
                 <option value="Default" disabled selected>Select a event</option>
                 <?php
 
+                $sql = "SELECT eventnaam FROM event";
+                $sqlresult = mysqli_query($db, $sql);
 
-                $servername = "localhost";
-                $username = "root";
-                $password = "";
-                $dbname = "EasyTiger-Patio";
-
-                class eventRows extends RecursiveIteratorIterator
-                {
-                    function __construct($it)
-                    {
-                        parent::__construct($it, self::LEAVES_ONLY);
-                    }
-
-                    function current()
-                    {
-                        return "<td style='width:150px;border:1px solid black;'>" . parent::current() . "</td>";
-                    }
-
-                    function beginChildren()
-                    {
-                        echo "<option value='1'>";
-                    }
-
-                    function endChildren()
-                    {
-                        echo "</option>" . "\n";
-                    }
+                $rows = mysqli_fetch_all($sqlresult, MYSQLI_ASSOC);
+                foreach ($rows as $row) {
+                    echo ("<option value='1'>" . $row["eventnaam"] . "</option>" . "\n");
+                    echo $row;
                 }
-
-                try {
-                    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-                    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                    $stmt = $conn->prepare("SELECT eventnaam FROM event");
-                    $stmt->execute();
-
-                    // set the resulting array to associative
-                    $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
-                    foreach (new eventRows(new RecursiveArrayIterator($stmt->fetchAll())) as $k => $v) {
-                        echo $v;
-                    }
-                } catch (PDOException $e) {
-                    echo "Error: " . $e->getMessage();
-                }
-                $conn = null;
                 ?>
             </select><br>
-            <input type="submit">
+            <input name="link_event_band" type="submit">
         </form>
+
+
     </body>
 
 </html>

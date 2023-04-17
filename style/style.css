@@ -122,22 +122,43 @@ div {
     vertical-align: bottom;
 }
 
-.icon-guitar:before {
-    content: "\e900";
+.fluent-icons-filled-20 {
+    font-family: "FluentIcons Filled 20";
+    font-weight: normal;
+    font-style: normal;
+    font-size: 20px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    font-feature-settings: 'liga';
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-clock:before {
-    content: "\e904";
+/* ERRORS */
+p.errors {
+    color: red;
+    width: fit-content;
+    display: block;
+    padding: 10px;
+    margin: 0;
+    border-radius: var(--border-radius-small);
 }
 
-.icon-mail:before {
-    content: "\e903";
-}
+/* PHONE SIZE */
+@media only screen and (max-width: 810px) {
 
-.icon-receipt_add:before {
-    content: "\e908";
-}
-
-.icon-merge:before {
-    content: "\e909";
+    .calendar span,
+    .login span,
+    .account span,
+    .create_band span,
+    .create_event span,
+    .link_event_band span {
+        display: none;
+    }
 }

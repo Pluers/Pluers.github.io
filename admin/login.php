@@ -15,10 +15,12 @@
         <form method="post" action="login.php">
             <?php include('errors.php'); ?>
             <div class="input-group">
+                <i class="fluent-icons-filled-20">number_symbol</i>
                 <label>Username</label>
                 <input type="text" name="username">
             </div>
             <div class="input-group">
+                <i class="fluent-icons-filled-20">lock</i>
                 <label>Password</label>
                 <input type="password" name="password">
             </div>
@@ -26,7 +28,10 @@
                 <button type="submit" class="btn" name="login_user">Login</button>
             </div>
             <p>
-                Not yet a member? <a href="register.php">Sign up</a>
+                Not yet a member? <a href="register.php">
+                    <i class="fluent-icons-filled-20">person_add</i>
+                    Sign up
+                </a>
             </p>
         </form>
     </body>

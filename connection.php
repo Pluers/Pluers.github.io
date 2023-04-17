@@ -116,7 +116,93 @@ if (isset($_POST['create_band'])) {
     $result = mysqli_query($db, $band_check_query);
     $band = mysqli_fetch_assoc($result);
 
-    if ($band) { // if user exists
+    if ($band) { // if bandname exists
+        if ($band['bandname'] === $bandname) {
+            array_push($errors, "bandname already exists");
+        }
+
+        if ($band['herkomst'] === $herkomst) {
+            array_push($errors, "herkomst already exists");
+        }
+    }
+
+    // Finally, register band if there are no errors in the form
+    if (count($errors) == 0) {
+
+        $query = "INSERT INTO band (bandname, genre, herkomst, omschrijving) 
+  			  VALUES('$bandname', '$genre', '$herkomst', '$omschrijving')";
+        mysqli_query($db, $query);
+        header('location: link_event_band.php');
+    }
+}
+
+// Create Event
+if (isset($_POST['create_event'])) {
+    // receive all input values from the form
+    $eventname = mysqli_real_escape_string($db, $_POST['eventname']);
+    $date = mysqli_real_escape_string($db, $_POST['date']);
+    $time = mysqli_real_escape_string($db, $_POST['time']);
+    $price = mysqli_real_escape_string($db, $_POST['price']);
+
+    // form validation: ensure that the form is correctly filled ...
+    // by adding (array_push()) corresponding error unto $errors array
+    if (empty($eventname)) {
+        array_push($errors, "eventname is required");
+    }
+    if (empty($date)) {
+        array_push($errors, "date is required");
+    }
+    if (empty($time)) {
+        array_push($errors, "time is required");
+    }
+    if (empty($price)) {
+        array_push($errors, "price is required");
+    }
+
+    // first check the database to make sure 
+    // a band does not already exist with the same bandname 
+    $event_check_query = "SELECT * FROM event WHERE eventname='$eventname' LIMIT 1";
+    $result = mysqli_query($db, $event_check_query);
+    $event = mysqli_fetch_assoc($result);
+
+    if ($event) { // if bandname exists
+        if ($event['eventname'] === $eventname) {
+            array_push($errors, "eventname already exists");
+        }
+    }
+
+    // Finally, register band if there are no errors in the form
+    if (count($errors) == 0) {
+
+        $query = "INSERT INTO event (eventname, date, time, price) 
+  			  VALUES('$eventname', '$date', '$time', '$price')";
+        mysqli_query($db, $query);
+        header('location: link_event_band.php');
+    }
+}
+
+// Link event & band
+if (isset($_POST['link_event_band_off'])) { //TURNED OFF
+    // receive all input values from the form
+    $bandname = mysqli_real_escape_string($db, $_POST['bandname']);
+    $genre = mysqli_real_escape_string($db, $_POST['genre']);
+
+    // form validation: ensure that the form is correctly filled ...
+    // by adding (array_push()) corresponding error unto $errors array
+    if (empty($bandname)) {
+        array_push($errors, "bandname is required");
+    }
+    if (empty($genre)) {
+        array_push($errors, "genre is required");
+    }
+
+    // first check the database to make sure 
+    // a band does not already exist with the same bandname 
+    $band_check_query = "SELECT * FROM band WHERE bandname='$bandname' OR herkomst='$herkomst' LIMIT 1";
+    $result = mysqli_query($db, $band_check_query);
+    $band = mysqli_fetch_assoc($result);
+
+    if ($band) { // if bandname exists
         if ($band['bandname'] === $bandname) {
             array_push($errors, "bandname already exists");
         }

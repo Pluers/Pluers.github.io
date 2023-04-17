@@ -34,11 +34,29 @@ if (isset($_GET['logout'])) {
             <?php endif ?>
 
             <!-- logged in user information -->
-            <?php if (isset($_SESSION['username'])): ?>
-                <p>Welcome <strong>
-                        <?php echo $_SESSION['username']; ?>
-                    </strong></p>
-                <p> <a href="account.php?logout='1'" style="color: red;">logout</a> </p>
+            <?php if (isset($_SESSION['username'])):
+                ?>
+                <p>Welcome
+                    <strong>
+                        <?php
+                        if ($_SESSION['username'] == 'Admin' || $_SESSION['username'] == 'admin') {
+                            ?>
+                            <i class="fluent-icons-filled-20">shield_keyhole</i>
+                            <?php
+                        } else {
+                            ?>
+                            <i class="fluent-icons-filled-20">person</i>
+                            <?php
+                        }
+                        echo $_SESSION['username'];
+                        ?>
+                    </strong>
+                </p>
+
+                <a href="account.php?logout='1'" style="color: red;">
+                    <i class="fluent-icons-filled-20">person_arrow_left</i>
+                    logout
+                </a>
             <?php endif ?>
         </div>
 

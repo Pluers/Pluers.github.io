@@ -5,8 +5,6 @@
         <?php include_once("header.php") ?>
         <?php include('connection.php') ?>
         <link rel="stylesheet" href="/Pluers.github.io/style/index.css">
-        <link rel="stylesheet"
-            href="https://cdn.jsdelivr.net/gh/wazybr/fluentui-system-icons-font/webfonts/css/fluent-icons-filled-20.css">
     </head>
 
     <body>
@@ -68,75 +66,74 @@
 
         ?>
         <?php
-        echo "<table style='border: solid 1px black;'>";
-        echo "<tr><th>Id</th><th>BandName</th><th></th><th>Genre</th></tr>";
+        // echo "<table style='border: solid 1px black;'>";
+        // echo "<tr><th>Id</th><th>BandName</th><th></th><th>Genre</th></tr>";
+        
+        // function show_records($mysql_link)
+        // {
+        //     date_default_timezone_set('Europe/London');
+        //     $today = date('Y/m/d');
+        //     $future = date('Y-m-d', strtotime("+10 months", strtotime($today)));
+        
 
-        function show_records($mysql_link)
-        {
-            date_default_timezone_set('Europe/London');
-            $today = date('Y/m/d');
-            $future = date('Y-m-d', strtotime("+10 months", strtotime($today)));
+        //     $q = "SELECT number,startdate,traction,tourname,start,fares,tourcompany
+        //             FROM specials
+        //             WHERE startdate>='$today' AND startdate<='$future' AND steam='y'
+        //             ORDER BY startdate";
+        
 
+        //     $r = mysqli_query($mysql_link, $q);
+        //     $lastmonth = "";
+        //     if ($r) {
+        //         echo "<Table id='customers'>
+        //         <tr>
+        //         <th>Date</th>
+        //         <th>Locomotive</th>
+        //         <th>Organiser</th>
+        //         <th>Name</th>
+        //         <th>Pick Up Points</th>
+        //         <th>Destination</th>
+        //         <th>Fares</th>
+        //         </tr>";
+        
+        //         while ($row = mysqli_fetch_array($r, MYSQLI_ASSOC)) {
+        //             $parts = explode('-', $row['startdate']);
+        //             $timestamp = strtotime($row['startdate']);
+        //             $parts2 = date('YM', $timestamp);
+        
+        //             if (empty($lastmonth) || $lastmonth != $parts2) {
+        
+        //                 if (!empty($lastmonth)) {
+        //                     echo '</table>';
+        //                 }
+        //                 echo "<h1>$parts2</h1>";
+        //                 echo "<table id='customers'>";
+        //                 $lastmonth = $parts2;
+        
 
-            $q = "SELECT number,startdate,traction,tourname,start,fares,tourcompany
-                    FROM specials
-                    WHERE startdate>='$today' AND startdate<='$future' AND steam='y'
-                    ORDER BY startdate";
-
-
-            $r = mysqli_query($mysql_link, $q);
-            $lastmonth = "";
-            if ($r) {
-                echo "<Table id='customers'>
-                <tr>
-                <th>Date</th>
-                <th>Locomotive</th>
-                <th>Organiser</th>
-                <th>Name</th>
-                <th>Pick Up Points</th>
-                <th>Destination</th>
-                <th>Fares</th>
-                </tr>";
-
-                while ($row = mysqli_fetch_array($r, MYSQLI_ASSOC)) {
-                    $parts = explode('-', $row['startdate']);
-                    $timestamp = strtotime($row['startdate']);
-                    $parts2 = date('YM', $timestamp);
-
-                    if (empty($lastmonth) || $lastmonth != $parts2) {
-
-                        if (!empty($lastmonth)) {
-                            echo '</table>';
-                        }
-                        echo "<h1>$parts2</h1>";
-                        echo "<table id='customers'>";
-                        $lastmonth = $parts2;
-
-
-                        echo "<tr>";
-                        echo "<td>" . $parts2 . "</td>";
-                        echo "<td>" . $row['traction'] . "</td>";
-                        echo "<td>" . $row['tourcompany'] . "</td>";
-                        echo "<td>" . $row['tourname'] . "</td>";
-                        echo "<td>" . $row['start'] . "</td>";
-                        echo "<td>" . $row['end'] . "</td>";
-                        echo "<td>" . $row['fares'] . "</td>";
-                        echo "</tr>";
-
-                    }
-                    echo "</Table>";
-                }
-
-            } else {
-                echo '<p>' . mysqli_error($mysql_link) . '</p>';
-            }
-        }
-        show_records($mysql_link);
-
-        mysqli_close($mysql_link);
-
-        ?>
-        ?>
+        //                 echo "<tr>";
+        //                 echo "<td>" . $parts2 . "</td>";
+        //                 echo "<td>" . $row['traction'] . "</td>";
+        //                 echo "<td>" . $row['tourcompany'] . "</td>";
+        //                 echo "<td>" . $row['tourname'] . "</td>";
+        //                 echo "<td>" . $row['start'] . "</td>";
+        //                 echo "<td>" . $row['end'] . "</td>";
+        //                 echo "<td>" . $row['fares'] . "</td>";
+        //                 echo "</tr>";
+        
+        //             }
+        //             echo "</Table>";
+        //         }
+        
+        //     } else {
+        //         echo '<p>' . mysqli_error($mysql_link) . '</p>';
+        //     }
+        // }
+        // show_records($mysql_link);
+        
+        // mysqli_close($mysql_link);
+        
+        // ?>
         <br>
         <br>
         <br>
