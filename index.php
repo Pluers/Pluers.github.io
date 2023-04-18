@@ -43,7 +43,7 @@
                 <option value="November">November</option>
                 <option value="December">December</option>
             </select>
-            <input type="submit" name="submit" value="Submit">
+            <button type="submit" name="select_month" value="Submit">Select</button>
         </form>
 
         <?php

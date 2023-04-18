@@ -1,5 +1,4 @@
 <?php
-include_once('header.php');
 
 // initializing variables
 $username = "";
@@ -182,42 +181,33 @@ if (isset($_POST['create_event'])) {
 }
 
 // Link event & band
-if (isset($_POST['link_event_band_off'])) { //TURNED OFF
+if (isset($_POST['link_event_band'])) {
     // receive all input values from the form
-    $bandname = mysqli_real_escape_string($db, $_POST['bandname']);
-    $genre = mysqli_real_escape_string($db, $_POST['genre']);
-
-    // form validation: ensure that the form is correctly filled ...
-    // by adding (array_push()) corresponding error unto $errors array
-    if (empty($bandname)) {
-        array_push($errors, "bandname is required");
-    }
-    if (empty($genre)) {
-        array_push($errors, "genre is required");
-    }
+    $idband = mysqli_real_escape_string($db, $_POST['Band']);
+    $idevent = mysqli_real_escape_string($db, $_POST['Event']);
 
     // first check the database to make sure 
-    // a band does not already exist with the same bandname 
-    $band_check_query = "SELECT * FROM band WHERE bandname='$bandname' OR herkomst='$herkomst' LIMIT 1";
-    $result = mysqli_query($db, $band_check_query);
-    $band = mysqli_fetch_assoc($result);
+    // a band does not already exist with the same band_has_event 
+    $band_has_event_check_query = "SELECT * FROM band_has_event WHERE band_idband='$idband' OR event_idevent='$idevent' LIMIT 1";
+    $result = mysqli_query($db, $band_has_event_check_query);
+    $band_has_event = mysqli_fetch_assoc($result);
+    // BOOL GIVEN?
 
-    if ($band) { // if bandname exists
-        if ($band['bandname'] === $bandname) {
-            array_push($errors, "bandname already exists");
-        }
-
-        if ($band['herkomst'] === $herkomst) {
-            array_push($errors, "herkomst already exists");
+    if ($band_has_event) { // if band_has_event exists
+        if ($band_has_event['band_idband'] === $idband && $band_has_event['event_idevent'] === $idevent) {
+            array_push($errors, "combination already exists");
         }
     }
 
     // Finally, register band if there are no errors in the form
     if (count($errors) == 0) {
 
-        $query = "INSERT INTO band (bandname, genre, herkomst, omschrijving) 
-  			  VALUES('$bandname', '$genre', '$herkomst', '$omschrijving')";
+        $query = "INSERT INTO band_has_event (band_idband, event_idevent) 
+  			  VALUES('$idband', '$idevent')";
         mysqli_query($db, $query);
-        header('location: link_event_band.php');
+        header('location: index.php');
+        if (!mysqli_query($db, $query)) {
+            printf("%d inserted.\n", mysqli_affected_rows($db));
+        }
     }
 }

@@ -20,7 +20,7 @@ if (isset($_GET['logout'])) {
 
     <body>
 
-        <div class="content">
+        <div class="account_page">
             <!-- notification message -->
             <?php if (isset($_SESSION['success'])): ?>
                 <div class="error success">

@@ -11,26 +11,25 @@ if ($_SESSION['username'] == 'Admin' || $_SESSION['username'] == 'admin') {
 <html>
 
     <head>
-        <h1>Create Band</h1>
+        <title>create band</title>
     </head>
 
     <body>
-        <form action="" method="post">
-            <?php include('../admin/errors.php'); ?>
-            <i class="fluent-icons-filled-20">rename</i>
-            <label for="bandname">BandName</label>
-            <input id="bandname" type="text" name="bandname"></input><br>
-            <i class="fluent-icons-filled-20">music_note</i>
-            <label for="genre">Genre</label>
-            <input id="genre" type="text" name="genre"></input><br>
-            <i class="fluent-icons-filled-20">earth</i>
-            <label for="herkomst">Origin</label>
-            <input id="herkomst" type="text" name="herkomst"></input><br>
-            <i class="fluent-icons-filled-20">text_field</i>
-            <label for="omschrijving">Description</label>
-            <input id="omschrijving" type="text" name="omschrijving"></input><br>
-            <button type="submit" name="create_band">Create Band</button>
-        </form>
+        <div class="create_pages">
+            <h1>Create Band</h1>
+            <form action="" method="post">
+                <?php include('../admin/errors.php'); ?>
+                <i class="fluent-icons-filled-20">rename</i>
+                <input id="bandname" type="text" name="bandname" placeholder="Bandnaam"></input><br>
+                <i class="fluent-icons-filled-20">music_note</i>
+                <input id="genre" type="text" name="genre" placeholder="Genre"></input><br>
+                <i class="fluent-icons-filled-20">earth</i>
+                <input id="herkomst" type="text" name="herkomst" placeholder="Herkomst"></input><br>
+                <i class="fluent-icons-filled-20">text_field</i>
+                <input id="omschrijving" type="text" name="omschrijving" placeholder="Omschrijving"></input><br>
+                <button type="submit" name="create_band">Create Band</button>
+            </form>
+        </div>
     </body>
 
 </html>

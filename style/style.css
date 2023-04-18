@@ -16,6 +16,17 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+.account_page {
+    margin: 10px;
+}
+
+.create_pages {
+    background: orange;
+    width: fit-content;
+    margin: 10px auto;
+    padding: 10px;
+}
+
 /* MAIN NAV BAR */
 ul {
     list-style-type: none;
@@ -50,6 +61,34 @@ div {
 }
 
 /* BUTTONS */
+button {
+    padding: 5px 10px;
+    margin: 10px;
+    border: none;
+    background: gray;
+    border-radius: var(--border-radius-small);
+    color: white;
+    font-weight: bold;
+    transition: var(--button-transition);
+    cursor: pointer;
+}
+
+button:disabled {
+    padding: 5px 10px;
+    margin: 10px;
+    border: none;
+    background: darkgray;
+    border-radius: var(--border-radius-small);
+    color: white;
+    font-weight: bold;
+    cursor: not-allowed;
+}
+
+.create_pages > button {
+    text-align: center;
+}
+
+button:hover,
 .calendar:hover {
     filter: var(--button-filter-brightness);
     transition: var(--button-transition);
@@ -140,12 +179,42 @@ div {
     -moz-osx-font-smoothing: grayscale;
 }
 
+/* TOOLTIPS */
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 100px;
+    font-size: small;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    font-family: Arial, Helvetica, sans-serif;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -50px;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
 /* ERRORS */
 p.errors {
     color: red;
     width: fit-content;
     display: block;
-    padding: 10px;
+    padding: 5px 0;
     margin: 0;
     border-radius: var(--border-radius-small);
 }

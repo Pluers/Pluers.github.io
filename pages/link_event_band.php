@@ -14,42 +14,39 @@ if ($_SESSION['username'] == 'Admin' || $_SESSION['username'] == 'admin') {
         <h1>Link event & band</h1>
     </head>
 
-
     <body>
-        <form action="" method="post">
+        <form action="" method="post" onsubmit='return false'>
             <?php include('../admin/errors.php'); ?>
-            <select name="Band" id="band">
+            <select name="Band" id="band" class="selection">
                 <option value="Default" disabled selected>Select a band</option>
                 <?php
 
-                $sql = "SELECT bandname FROM band";
+                $sql = "SELECT bandname, idband FROM band";
                 $sqlresult = mysqli_query($db, $sql);
 
                 $rows = mysqli_fetch_all($sqlresult, MYSQLI_ASSOC);
                 foreach ($rows as $row) {
-                    echo ("<option value='1'>" . $row["bandname"] . "</option>" . "\n");
+                    echo ("<option name='bandname' value='" . $row["idband"] . "'>" . $row["bandname"] . "</option>" . "\n");
                     echo $row;
                 }
                 ?>
             </select><br>
-            <select name="Event" id="event">
-                <option value="Default" disabled selected>Select a event</option>
+            <select name="Event" id="event" class="selection">
+                <option value="Default" disabled selected>Select an event</option>
                 <?php
 
-                $sql = "SELECT eventnaam FROM event";
+                $sql = "SELECT eventname, idevent FROM event";
                 $sqlresult = mysqli_query($db, $sql);
 
                 $rows = mysqli_fetch_all($sqlresult, MYSQLI_ASSOC);
                 foreach ($rows as $row) {
-                    echo ("<option value='1'>" . $row["eventnaam"] . "</option>" . "\n");
+                    echo ("<option name='eventname' value='" . $row["idevent"] . "'>" . $row["eventname"] . "</option>" . "\n");
                     echo $row;
                 }
                 ?>
             </select><br>
-            <input name="link_event_band" type="submit">
+            <button name="link_event_band" type="submit">Link</button>
         </form>
-
-
     </body>
 
 </html>
