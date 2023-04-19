@@ -16,7 +16,7 @@
                 // MONTH
                 echo $selectedMonthName;
                 // YEAR
-                if ($_POST['select_month_list'] >= date('n')) {
+                if ($selectedmonth >= date('n')) {
                     $year = date('Y');
                     echo " " . $year;
                 } else {
@@ -60,9 +60,63 @@
             </select>
             <button type="submit" name="select_month" value="Submit">Select</button>
         </form>
+
+        <!-- SELECT * FROM band, event INNER JOIN band_has_event WHERE band_has_event.event_idevent = event.idevent AND band_has_event.band_idband = band.idband; -->
+
+
         <?php
+        // QUERY FOR AMOUNT OF EVENTS
+        if (isset($selectedmonth)) {
+            $sqlofevents = "SELECT idevent, MONTH(date) FROM event INNER JOIN band_has_event WHERE band_has_event.event_idevent = event.idevent AND MONTH(date) = $selectedmonth;";
+            $resultofevents = mysqli_query($db, $sqlofevents);
+
+
+
+            for ($row = 0; $row < mysqli_num_rows($resultofevents); $row++) {
+                echo '<br /><table class="table table-bordered table-condensed">';
+                echo '<thead style="border: solid 1px black; display: table-caption;"><tr>';
+                echo '<th>' . "EVENTNAME" . '</th>';
+                echo '<th>DATE</th>';
+                echo '<th>TIME</th>';
+                echo '<th>PRICE</th>';
+                echo '</tr></thead>';
+                echo '<thead><tr>';
+                echo '<th>bandname</th>';
+                echo '<th>genre</th>';
+                echo '<th>Question Text</th>';
+                echo '<th>Answer</th>';
+                echo '</tr></thead>';
+                echo '<tbody>';
+            }
+
+            $sql = "SELECT * FROM band, event INNER JOIN band_has_event WHERE band_has_event.event_idevent = event.idevent AND band_has_event.band_idband = band.idband AND MONTH(date) = $selectedmonth;";
+            $result = mysqli_query($db, $sql);
+            //display the results
+            while ($row = mysqli_fetch_array($result)) {
+                echo '<tr>';
+                echo "<td>" . $row['bandname'] . "</td>";
+                echo "<td>" . $row['genre'] . "</td>";
+                echo "<td>" . $row['herkomst'] . "</td>";
+                echo "<td>" . $row['omschrijving'] . "</td>";
+                echo '</tr>';
+            }
+
+            echo '</tbody></table>';
+        } else {
+            // $sqlofevents = "SELECT idevent, MONTH(date) FROM event INNER JOIN band_has_event WHERE band_has_event.event_idevent = event.idevent";
+        }
+
+
+
+
+
+
+        // $table_check_query = "SELECT * FROM band, event INNER JOIN band_has_event WHERE band_has_event.event_idevent = event.idevent AND band_has_event.band_idband = band.idband; LIMIT 1";
+        // $result = mysqli_query($db, $band_check_query);
+        // $band = mysqli_fetch_assoc($result);
+        
         // echo "<table style='border: solid 1px black;'>";
-        // echo "<tr><th>Id</th><th>BandName</th><th></th><th>Genre</th></tr>";
+        // echo "<tr><th>" . "" . "</th><th>BandName</th><th></th><th>Genre</th></tr>";
         
         // function show_records($mysql_link)
         // {
@@ -128,7 +182,7 @@
         
         // mysqli_close($mysql_link);
         
-        // ?>
+        ?>
         <br>
         <br>
         <br>

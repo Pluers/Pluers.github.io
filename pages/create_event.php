@@ -27,7 +27,7 @@ if ($_SESSION['username'] == 'Admin' || $_SESSION['username'] == 'admin') {
                         class="tooltiptext">Aanvangstijd</span></i>
                 <input id="time" type="time" value="" name="time" placeholder="Aanvangstijd"></input><br>
                 <i class="fluent-icons-filled-20 tooltip">money<span class="tooltiptext">Price</span></i>
-                <input id="price" type="text" name="price" pattern="[0-9]{2}-[0-9]{2}" placeholder="Price"></input><br>
+                <input id="price" type="text" name="price" pattern="[0-9]{2}.[0-9]{2}" placeholder="Price"></input><br>
                 <button type="submit" name="create_event">Create Event</button>
             </form>
         </div>

@@ -135,11 +135,6 @@ if (isset($_POST['select_month'])) {
             array_push($errors, "combination already exists");
         }
     }
-
-    if (isset($_POST['select_month_list'])) {
-        echo $selectedmonth_check_query . "   month value: " . $_POST['select_month_list'];
-    }
-
 }
 
 // Create Band
