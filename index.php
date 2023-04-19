@@ -28,43 +28,23 @@
             ?>
         </p>
         <form action="" method="post">
-            <select name="Maand" id="month">
+            <select name="select_month_list" id="month">
                 <option value="Default" disabled selected>Select a month</option>
-                <option value="January">Januari</option>
-                <option value="February">Februari</option>
-                <option value="March">Maart</option>
-                <option value="April">April</option>
-                <option value="May">Mei</option>
-                <option value="June">Juni</option>
-                <option value="July">Juli</option>
-                <option value="August">Augustus</option>
-                <option value="September">September</option>
-                <option value="Oktober">Oktober</option>
-                <option value="November">November</option>
-                <option value="December">December</option>
+                <option value="1">Januari</option>
+                <option value="2">Februari</option>
+                <option value="3">Maart</option>
+                <option value="4">April</option>
+                <option value="5">Mei</option>
+                <option value="6">Juni</option>
+                <option value="7">Juli</option>
+                <option value="8">Augustus</option>
+                <option value="9">September</option>
+                <option value="10">Oktober</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
             </select>
             <button type="submit" name="select_month" value="Submit">Select</button>
         </form>
-
-        <?php
-        $RTMONTH = date("F", strtotime('m'));
-        if (!empty($_POST["Maand"])) {
-            $inputMonth = $_POST["Maand"];
-            if ($inputMonth == !null) {
-                if ($_POST["Maand"] === $RTMONTH) {
-                    echo "current month " . $RTMONTH . " is the same as the input month " . $inputMonth;
-                } else {
-                    echo "current month " . $RTMONTH . " is not the same as the input month " . $inputMonth;
-                    var_dump("Input month: " . $_POST["Maand"]);
-                    var_dump("Real time month: " . $RTMONTH);
-                }
-            } else {
-                var_dump($inputMonth);
-            }
-        }
-
-
-        ?>
         <?php
         // echo "<table style='border: solid 1px black;'>";
         // echo "<tr><th>Id</th><th>BandName</th><th></th><th>Genre</th></tr>";

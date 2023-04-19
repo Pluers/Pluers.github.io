@@ -86,6 +86,34 @@ if (isset($_POST['login_user'])) {
     }
 }
 
+// Select month in index and search for events
+if (isset($_POST['select_month'])) {
+    if (isset($_POST['select_month_list'])) {
+        // receive all input values from the form
+        $selectedmonth = mysqli_real_escape_string($db, $_POST['select_month_list']);
+    } else {
+        echo "Please select a month";
+    }
+
+
+    // first check the database to make sure a band does not already exist with the same band_has_event 
+    $selectedmonth_check_query = "SELECT * FROM band_has_event JOIN band, event WHERE band_idband=idband OR event_idevent=idevent LIMIT 1";
+    $result = mysqli_query($db, $selectedmonth_check_query);
+    $band_has_event = mysqli_fetch_assoc($result);
+
+    if ($band_has_event) { // if band_has_event exists
+        if ($band_has_event['band_idband'] === $band_has_event['idband'] && $band_has_event['event_idevent'] === $band_has_event['idevent']) {
+            array_push($errors, "combination already exists");
+        }
+    }
+
+    if (isset($_POST['select_month_list'])) {
+        echo $_POST['select_month_list'];
+        echo $selectedmonth_check_query;
+    }
+
+}
+
 // Create Band
 if (isset($_POST['create_band'])) {
     // receive all input values from the form

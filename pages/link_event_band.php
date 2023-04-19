@@ -14,13 +14,6 @@ if ($_SESSION['username'] == 'Admin' || $_SESSION['username'] == 'admin') {
         <h1>Link event & band</h1>
     </head>
 
-    <style>
-        select option[value="Default"] {
-            color: red;
-            font-weight: bold;
-        }
-    </style>
-
     <body>
         <form name="link_band_event" action="" method="post">
             <?php include('../admin/errors.php'); ?>
@@ -59,11 +52,11 @@ if ($_SESSION['username'] == 'Admin' || $_SESSION['username'] == 'admin') {
     <script>
         function validate() {
             if (document.link_band_event.Band.value == "Default" || document.link_band_event.Event.value == "Default") {
-                alert("Please select both to link");
+
+                window.alert("Please make sure you have selected both a band and an event");
                 document.link_band_event.Band.focus();
             }
         }
     </script>
-    <!-- PHP does do anything now. button doesn't work anymore, only to validate with javascript. Maybe clean it up a bit -->
 
 </html>
