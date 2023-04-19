@@ -11,13 +11,28 @@
 
         <h1>
             Agenda
-            <?php echo date("F", strtotime('m'));
-            echo date(" Y", strtotime('m')); ?>
-        </h1>
-        <p>Aantal Events:
-            <!-- Search for event count -->
             <?php
-            $sql = "SELECT * FROM event";
+            if (isset($selectedmonth)) {
+                // MONTH
+                echo $selectedMonthName;
+                // YEAR
+                if ($_POST['select_month_list'] >= date('n')) {
+                    $year = date('Y');
+                    echo " " . $year;
+                } else {
+                    $year = date('Y', strtotime('+1 years'));
+                    echo " " . $year;
+                }
+            }
+            ?>
+        </h1>
+        <!-- Search for event count -->
+        <?php
+        if (isset($selectedmonth)) {
+            echo "Aantal Events: ";
+        }
+        if (isset($selectedmonth)) {
+            $sql = "SELECT * FROM event WHERE MONTH(date) = " . $_POST['select_month_list'];
             if ($result = mysqli_query($db, $sql)) {
                 // Return the number of rows in result set
                 $rowcount = mysqli_num_rows($result);
@@ -25,8 +40,8 @@
                 // Free result set
                 mysqli_free_result($result);
             }
-            ?>
-        </p>
+        }
+        ?>
         <form action="" method="post">
             <select name="select_month_list" id="month">
                 <option value="Default" disabled selected>Select a month</option>
