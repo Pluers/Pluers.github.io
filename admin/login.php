@@ -8,32 +8,29 @@
     </head>
 
     <body>
-        <div class="header">
+        <div class="create_pages">
             <h2>Login</h2>
+            <form method="post" action="login.php">
+                <?php include('errors.php'); ?>
+                <div class="input-group">
+                    <i class="fluent-icons-filled-20">number_symbol</i>
+                    <input type="text" name="username">
+                </div>
+                <div class="input-group">
+                    <i class="fluent-icons-filled-20">lock</i>
+                    <input type="password" name="password">
+                </div>
+                <div class="input-group">
+                    <button type="submit" class="btn" name="login_user">Login</button>
+                </div>
+                <p>
+                    Not yet a member? <a href="register.php">
+                        <i class="fluent-icons-filled-20">person_add</i>
+                        Sign up
+                    </a>
+                </p>
+            </form>
         </div>
-
-        <form method="post" action="login.php">
-            <?php include('errors.php'); ?>
-            <div class="input-group">
-                <i class="fluent-icons-filled-20">number_symbol</i>
-                <label>Username</label>
-                <input type="text" name="username">
-            </div>
-            <div class="input-group">
-                <i class="fluent-icons-filled-20">lock</i>
-                <label>Password</label>
-                <input type="password" name="password">
-            </div>
-            <div class="input-group">
-                <button type="submit" class="btn" name="login_user">Login</button>
-            </div>
-            <p>
-                Not yet a member? <a href="register.php">
-                    <i class="fluent-icons-filled-20">person_add</i>
-                    Sign up
-                </a>
-            </p>
-        </form>
     </body>
 
 </html>

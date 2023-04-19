@@ -252,13 +252,12 @@ if (isset($_POST['link_event_band'])) {
 
     // Finally, register band if there are no errors in the form
     if (count($errors) == 0) {
-
         $query = "INSERT INTO band_has_event (band_idband, event_idevent) 
   			  VALUES('$idband', '$idevent')";
         mysqli_query($db, $query);
-        header('location: link_event_band.php');
         if (!mysqli_query($db, $query)) {
-            printf("%d inserted.\n", mysqli_affected_rows($db));
+
+            array_push($errors, "successful");
         }
     }
 }

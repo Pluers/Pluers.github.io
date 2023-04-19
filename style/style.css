@@ -1,8 +1,8 @@
 /* VARIABLES */
 :root {
     --navbar-padding: 1rem;
-    --border-radius: 11px;
-    --border-radius-small: 6px;
+    --border-spacing: 11px;
+    --border-radius: 6px;
     --navbar-height: 14px;
     --navbar-main-color: #e4e4e4;
     --navbar-admin-color: #c4f3ff;
@@ -16,15 +16,13 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-.account_page {
-    margin: 10px;
-}
-
 .create_pages {
-    background: orange;
+    background: gainsboro;
     width: fit-content;
     margin: 10px auto;
     padding: 10px;
+    text-align-last: center;
+    text-align: -webkit-center;
 }
 
 /* MAIN NAV BAR */
@@ -33,13 +31,12 @@ ul {
     margin: unset;
     overflow: hidden;
     padding: var(--navbar-padding);
-    border-radius: 0 0 var(--border-radius-small) var(--border-radius-small);
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
 }
 
 ul.main_panel {
     background: linear-gradient(90deg, var(--navbar-main-color), var(--navbar-admin-color), var(--navbar-admin-color));
 }
-
 
 li {
     float: left;
@@ -56,8 +53,20 @@ li a {
 
 li,
 li a,
-div {
-    border-radius: var(--border-radius-small);
+div,
+section {
+    border-radius: var(--border-radius);
+}
+
+/* TABLE */
+table {
+    border-spacing: 11px;
+    border: solid gray 3px;
+}
+
+thead.table_eventname_header {
+    background: gray;
+    display: table-caption;
 }
 
 /* BUTTONS */
@@ -66,7 +75,7 @@ button {
     margin: 10px;
     border: none;
     background: gray;
-    border-radius: var(--border-radius-small);
+    border-radius: var(--border-radius);
     color: white;
     font-weight: bold;
     transition: var(--button-transition);
@@ -78,7 +87,7 @@ button:disabled {
     margin: 10px;
     border: none;
     background: darkgray;
-    border-radius: var(--border-radius-small);
+    border-radius: var(--border-radius);
     color: white;
     font-weight: bold;
     cursor: not-allowed;
@@ -100,10 +109,22 @@ button:hover,
     transition: var(--button-transition);
 }
 
+/* INPUT */
+
+.create_pages input,
+.create_pages select {
+    width: 75%;
+    box-sizing: border-box;
+    padding: 5px;
+    border-radius: 10px;
+    border: none;
+    margin: 3px;
+}
+
 /* ADMIN */
 
 .admin_panel {
-    border-radius: var(--border-radius-small);
+    border-radius: var(--border-radius);
     position: absolute;
     right: 0;
     top: 0;
@@ -161,6 +182,12 @@ button:hover,
     vertical-align: bottom;
 }
 
+.create_pages .fluent-icons-filled-20,
+.create_pages.fluent-icons-regular-20,
+.create_pages.fluent-icons-20 {
+    vertical-align: middle;
+}
+
 .fluent-icons-filled-20 {
     font-family: "FluentIcons Filled 20";
     font-weight: normal;
@@ -177,6 +204,7 @@ button:hover,
     -webkit-font-feature-settings: 'liga';
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    user-select: none;
 }
 
 /* TOOLTIPS */
@@ -216,7 +244,7 @@ p.errors {
     display: block;
     padding: 5px 0;
     margin: 0;
-    border-radius: var(--border-radius-small);
+    border-radius: var(--border-radius);
 }
 
 /* PHONE SIZE */

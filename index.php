@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html>
 
+    <!-- 
+    Add messages when not admin and trying to create band or event when redirected to login page. 
+    distribute table info to different tables, not just 1. 
+    table width to a standard of 90%. 
+    clean up code 
+    -->
+
     <head>
         <?php include_once("header.php") ?>
         <?php include('connection.php') ?>
@@ -8,198 +15,104 @@
     </head>
 
     <body>
-
-        <h1>
-            Agenda
+        <section class="create_pages">
+            <h1>
+                Agenda
+                <?php
+                if (isset($selectedmonth)) {
+                    // MONTH
+                    echo $selectedMonthName;
+                    // YEAR
+                    if ($selectedmonth >= date('n')) {
+                        $year = date('Y');
+                        echo " " . $year;
+                    } else {
+                        $year = date('Y', strtotime('+1 years'));
+                        echo " " . $year;
+                    }
+                }
+                ?>
+            </h1>
+            <!-- Search for event count -->
             <?php
             if (isset($selectedmonth)) {
-                // MONTH
-                echo $selectedMonthName;
-                // YEAR
-                if ($selectedmonth >= date('n')) {
-                    $year = date('Y');
-                    echo " " . $year;
-                } else {
-                    $year = date('Y', strtotime('+1 years'));
-                    echo " " . $year;
+                echo "Aantal Events: ";
+            }
+            if (isset($selectedmonth)) {
+                $sql = "SELECT idevent FROM event WHERE MONTH(date) = " . $selectedmonth;
+                if ($result = mysqli_query($db, $sql)) {
+                    // Return the number of rows in result set
+                    $rowcount = mysqli_num_rows($result);
+                    echo $rowcount;
+                    // Free result set
+                    mysqli_free_result($result);
                 }
             }
             ?>
-        </h1>
-        <!-- Search for event count -->
-        <?php
-        if (isset($selectedmonth)) {
-            echo "Aantal Events: ";
-        }
-        if (isset($selectedmonth)) {
-            $sql = "SELECT * FROM event WHERE MONTH(date) = " . $_POST['select_month_list'];
-            if ($result = mysqli_query($db, $sql)) {
-                // Return the number of rows in result set
-                $rowcount = mysqli_num_rows($result);
-                printf("%d ", $rowcount);
-                // Free result set
-                mysqli_free_result($result);
+            <form action="" method="post">
+                <i class="fluent-icons-filled-20">calendar_month</i>
+                <select name="select_month_list" id="month">
+                    <option value="Default" disabled selected>Select a month</option>
+                    <option value="1">Januari</option>
+                    <option value="2">Februari</option>
+                    <option value="3">Maart</option>
+                    <option value="4">April</option>
+                    <option value="5">Mei</option>
+                    <option value="6">Juni</option>
+                    <option value="7">Juli</option>
+                    <option value="8">Augustus</option>
+                    <option value="9">September</option>
+                    <option value="10">Oktober</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                </select>
+                <button type="submit" name="select_month" value="Submit">Select</button>
+            </form>
+
+            <!-- SELECT * FROM band, event INNER JOIN band_has_event WHERE band_has_event.event_idevent = event.idevent AND band_has_event.band_idband = band.idband; -->
+
+
+            <?php
+            // QUERY FOR AMOUNT OF EVENTS
+            if (isset($selectedmonth)) {
+                $resultofevents = mysqli_query($db, "SELECT * FROM event WHERE MONTH(date) = $selectedmonth;");
+
+                $sql = "SELECT * FROM band, event INNER JOIN band_has_event WHERE band_has_event.event_idevent = event.idevent AND band_has_event.band_idband = band.idband AND MONTH(date) = $selectedmonth;";
+                $result = mysqli_query($db, $sql);
+
+                // AMOUNT OF TABLES
+                while ($tablerow = mysqli_fetch_array($resultofevents)) {
+                    echo '<br /><table class="table table-bordered table-condensed">';
+                    echo '<thead class="table_eventname_header"><tr>';
+                    echo '<th>' . $tablerow['eventname'] . '</th>';
+                    echo '<th>' . 'Datum: ' . $tablerow['date'] . '</th>';
+                    echo '<th>' . 'Aanvangstijd: ' . $tablerow['time'] . '</th>';
+                    echo '<th>' . 'Entree: €' . $tablerow['price'] . '</th>';
+                    echo '</tr></thead>';
+                    echo '<thead><tr>';
+                    echo '<th>bandname</th>';
+                    echo '<th>genre</th>';
+                    echo '<th>origin</th>';
+                    echo '<th>description</th>';
+                    echo '</tr></thead>';
+                    echo '<tbody>';
+
+                    //display the results
+                    while ($row = mysqli_fetch_array($result)) {
+                        echo '<tr>';
+                        echo "<td>" . $row['bandname'] . "</td>";
+                        echo "<td>" . $row['genre'] . "</td>";
+                        echo "<td>" . $row['herkomst'] . "</td>";
+                        echo "<td>" . $row['omschrijving'] . "</td>";
+                        echo '</tr>';
+                    }
+
+                    echo '</tbody></table>';
+                }
             }
-        }
-        ?>
-        <form action="" method="post">
-            <select name="select_month_list" id="month">
-                <option value="Default" disabled selected>Select a month</option>
-                <option value="1">Januari</option>
-                <option value="2">Februari</option>
-                <option value="3">Maart</option>
-                <option value="4">April</option>
-                <option value="5">Mei</option>
-                <option value="6">Juni</option>
-                <option value="7">Juli</option>
-                <option value="8">Augustus</option>
-                <option value="9">September</option>
-                <option value="10">Oktober</option>
-                <option value="11">November</option>
-                <option value="12">December</option>
-            </select>
-            <button type="submit" name="select_month" value="Submit">Select</button>
-        </form>
+            ?>
+        </section>
 
-        <!-- SELECT * FROM band, event INNER JOIN band_has_event WHERE band_has_event.event_idevent = event.idevent AND band_has_event.band_idband = band.idband; -->
-
-
-        <?php
-        // QUERY FOR AMOUNT OF EVENTS
-        if (isset($selectedmonth)) {
-            $sqlofevents = "SELECT idevent, MONTH(date) FROM event INNER JOIN band_has_event WHERE band_has_event.event_idevent = event.idevent AND MONTH(date) = $selectedmonth;";
-            $resultofevents = mysqli_query($db, $sqlofevents);
-
-
-
-            for ($row = 0; $row < mysqli_num_rows($resultofevents); $row++) {
-                echo '<br /><table class="table table-bordered table-condensed">';
-                echo '<thead style="border: solid 1px black; display: table-caption;"><tr>';
-                echo '<th>' . "EVENTNAME" . '</th>';
-                echo '<th>DATE</th>';
-                echo '<th>TIME</th>';
-                echo '<th>PRICE</th>';
-                echo '</tr></thead>';
-                echo '<thead><tr>';
-                echo '<th>bandname</th>';
-                echo '<th>genre</th>';
-                echo '<th>Question Text</th>';
-                echo '<th>Answer</th>';
-                echo '</tr></thead>';
-                echo '<tbody>';
-            }
-
-            $sql = "SELECT * FROM band, event INNER JOIN band_has_event WHERE band_has_event.event_idevent = event.idevent AND band_has_event.band_idband = band.idband AND MONTH(date) = $selectedmonth;";
-            $result = mysqli_query($db, $sql);
-            //display the results
-            while ($row = mysqli_fetch_array($result)) {
-                echo '<tr>';
-                echo "<td>" . $row['bandname'] . "</td>";
-                echo "<td>" . $row['genre'] . "</td>";
-                echo "<td>" . $row['herkomst'] . "</td>";
-                echo "<td>" . $row['omschrijving'] . "</td>";
-                echo '</tr>';
-            }
-
-            echo '</tbody></table>';
-        } else {
-            // $sqlofevents = "SELECT idevent, MONTH(date) FROM event INNER JOIN band_has_event WHERE band_has_event.event_idevent = event.idevent";
-        }
-
-
-
-
-
-
-        // $table_check_query = "SELECT * FROM band, event INNER JOIN band_has_event WHERE band_has_event.event_idevent = event.idevent AND band_has_event.band_idband = band.idband; LIMIT 1";
-        // $result = mysqli_query($db, $band_check_query);
-        // $band = mysqli_fetch_assoc($result);
-        
-        // echo "<table style='border: solid 1px black;'>";
-        // echo "<tr><th>" . "" . "</th><th>BandName</th><th></th><th>Genre</th></tr>";
-        
-        // function show_records($mysql_link)
-        // {
-        //     date_default_timezone_set('Europe/London');
-        //     $today = date('Y/m/d');
-        //     $future = date('Y-m-d', strtotime("+10 months", strtotime($today)));
-        
-
-        //     $q = "SELECT number,startdate,traction,tourname,start,fares,tourcompany
-        //             FROM specials
-        //             WHERE startdate>='$today' AND startdate<='$future' AND steam='y'
-        //             ORDER BY startdate";
-        
-
-        //     $r = mysqli_query($mysql_link, $q);
-        //     $lastmonth = "";
-        //     if ($r) {
-        //         echo "<Table id='customers'>
-        //         <tr>
-        //         <th>Date</th>
-        //         <th>Locomotive</th>
-        //         <th>Organiser</th>
-        //         <th>Name</th>
-        //         <th>Pick Up Points</th>
-        //         <th>Destination</th>
-        //         <th>Fares</th>
-        //         </tr>";
-        
-        //         while ($row = mysqli_fetch_array($r, MYSQLI_ASSOC)) {
-        //             $parts = explode('-', $row['startdate']);
-        //             $timestamp = strtotime($row['startdate']);
-        //             $parts2 = date('YM', $timestamp);
-        
-        //             if (empty($lastmonth) || $lastmonth != $parts2) {
-        
-        //                 if (!empty($lastmonth)) {
-        //                     echo '</table>';
-        //                 }
-        //                 echo "<h1>$parts2</h1>";
-        //                 echo "<table id='customers'>";
-        //                 $lastmonth = $parts2;
-        
-
-        //                 echo "<tr>";
-        //                 echo "<td>" . $parts2 . "</td>";
-        //                 echo "<td>" . $row['traction'] . "</td>";
-        //                 echo "<td>" . $row['tourcompany'] . "</td>";
-        //                 echo "<td>" . $row['tourname'] . "</td>";
-        //                 echo "<td>" . $row['start'] . "</td>";
-        //                 echo "<td>" . $row['end'] . "</td>";
-        //                 echo "<td>" . $row['fares'] . "</td>";
-        //                 echo "</tr>";
-        
-        //             }
-        //             echo "</Table>";
-        //         }
-        
-        //     } else {
-        //         echo '<p>' . mysqli_error($mysql_link) . '</p>';
-        //     }
-        // }
-        // show_records($mysql_link);
-        
-        // mysqli_close($mysql_link);
-        
-        ?>
-        <br>
-        <br>
-        <br>
-        <table>
-            <tr>
-                <th>Band name</th>
-                <th>Date</th>
-                <th>Price</th>
-            </tr>
-            <tr>
-                <td>the band</td>
-                <td>time</td>
-                <td>money</td>
-            </tr>
-        </table>
-        <a href="./pages/create_event.php">create event</a>
-        <a href="./pages/create_band.php">add a band</a>
     </body>
 
 </html>
