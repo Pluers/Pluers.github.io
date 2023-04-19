@@ -91,10 +91,39 @@ if (isset($_POST['select_month'])) {
     if (isset($_POST['select_month_list'])) {
         // receive all input values from the form
         $selectedmonth = mysqli_real_escape_string($db, $_POST['select_month_list']);
-    } else {
-        echo "Please select a month";
+        // give the month name a default value of the month number
+        $selectedMonthName = $selectedmonth;
+        // rename every month number to month name
+        if ($selectedmonth === "Default") {
+            $selectedMonthName = "";
+        } else if ($selectedmonth === "1") {
+            $selectedMonthName = "Januari";
+        } else if ($selectedmonth === "2") {
+            $selectedMonthName = "Februari";
+        } else if ($selectedmonth === "3") {
+            $selectedMonthName = "Maart";
+        } else if ($selectedmonth === "4") {
+            $selectedMonthName = "April";
+        } else if ($selectedmonth === "5") {
+            $selectedMonthName = "Mei";
+        } else if ($selectedmonth === "6") {
+            $selectedMonthName = "Juni";
+        } else if ($selectedmonth === "7") {
+            $selectedMonthName = "Juli";
+        } else if ($selectedmonth === "8") {
+            $selectedMonthName = "Augustus";
+        } else if ($selectedmonth === "9") {
+            $selectedMonthName = "September";
+        } else if ($selectedmonth === "10") {
+            $selectedMonthName = "Oktober";
+        } else if ($selectedmonth === "11") {
+            $selectedMonthName = "November";
+        } else if ($selectedmonth === "12") {
+            $selectedMonthName = "December";
+        }
     }
 
+    // NOT WORKING YET ↓
 
     // first check the database to make sure a band does not already exist with the same band_has_event 
     $selectedmonth_check_query = "SELECT * FROM band_has_event JOIN band, event WHERE band_idband=idband OR event_idevent=idevent LIMIT 1";
@@ -108,8 +137,7 @@ if (isset($_POST['select_month'])) {
     }
 
     if (isset($_POST['select_month_list'])) {
-        echo $_POST['select_month_list'];
-        echo $selectedmonth_check_query;
+        echo $selectedmonth_check_query . "   month value: " . $_POST['select_month_list'];
     }
 
 }
