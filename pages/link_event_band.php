@@ -22,7 +22,7 @@ if ($_SESSION['username'] == 'Admin' || $_SESSION['username'] == 'admin') {
     </style>
 
     <body>
-        <form name="link_band_event" action="" method="post" onsubmit='return false'>
+        <form name="link_band_event" action="" method="post">
             <?php include('../admin/errors.php'); ?>
             <select name="Band" id="band">
                 <option value="Default" disabled selected>Select a band</option>
