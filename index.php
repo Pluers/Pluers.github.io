@@ -15,7 +15,7 @@
     </head>
 
     <body>
-        <section class="create_pages">
+        <div class="create_pages">
             <h1>
                 Agenda
                 <?php
@@ -76,18 +76,17 @@
             // QUERY FOR AMOUNT OF EVENTS
             if (isset($selectedmonth)) {
                 $resultofevents = mysqli_query($db, "SELECT * FROM event WHERE MONTH(date) = $selectedmonth;");
-
-                $sql = "SELECT * FROM band, event INNER JOIN band_has_event WHERE band_has_event.event_idevent = event.idevent AND band_has_event.band_idband = band.idband AND MONTH(date) = $selectedmonth;";
-                $result = mysqli_query($db, $sql);
+                $resultofbands = mysqli_query($db, "SELECT * FROM band, event JOIN band_has_event WHERE band_has_event.event_idevent = event.idevent AND band_has_event.band_idband = band.idband AND MONTH(date) = $selectedmonth LIMIT 3;");
 
                 // AMOUNT OF TABLES
-                while ($tablerow = mysqli_fetch_array($resultofevents)) {
+                // list of events in tables.
+                while ($table = mysqli_fetch_array($resultofevents)) {
                     echo '<br /><table class="table table-bordered table-condensed">';
                     echo '<thead class="table_eventname_header"><tr>';
-                    echo '<th>' . $tablerow['eventname'] . '</th>';
-                    echo '<th>' . 'Datum: ' . $tablerow['date'] . '</th>';
-                    echo '<th>' . 'Aanvangstijd: ' . $tablerow['time'] . '</th>';
-                    echo '<th>' . 'Entree: €' . $tablerow['price'] . '</th>';
+                    echo '<th>' . $table['eventname'] . '</th>';
+                    echo '<th>' . 'Datum: ' . $table['date'] . '</th>';
+                    echo '<th>' . 'Aanvangstijd: ' . $table['time'] . '</th>';
+                    echo '<th>' . 'Entree: €' . $table['price'] . '</th>';
                     echo '</tr></thead>';
                     echo '<thead><tr>';
                     echo '<th>bandname</th>';
@@ -97,22 +96,31 @@
                     echo '</tr></thead>';
                     echo '<tbody>';
 
-                    //display the results
-                    while ($row = mysqli_fetch_array($result)) {
-                        echo '<tr>';
-                        echo "<td>" . $row['bandname'] . "</td>";
-                        echo "<td>" . $row['genre'] . "</td>";
-                        echo "<td>" . $row['herkomst'] . "</td>";
-                        echo "<td>" . $row['omschrijving'] . "</td>";
-                        echo '</tr>';
+                    // if event_has_band id is the same as tableid then add rows of bands. 
+                    while ($row = mysqli_fetch_array($resultofbands)) {
+                        echo " " . $row['event_idevent'];
+                        echo " " . $row['idevent'];
+                        echo " " . $row['band_idband'];
+                        echo " " . $row['idband'];
+                        echo "<br>";
+                        if ($row['idevent'] == $row['event_idevent']) {
+                            echo '<tr>';
+                            echo "<td>" . $row['bandname'] . "</td>";
+                            echo "<td>" . $row['genre'] . "</td>";
+                            echo "<td>" . $row['herkomst'] . "</td>";
+                            echo "<td>" . $row['omschrijving'] . "</td>";
+                            echo '</tr>';
+                        }
+
+
                     }
+
 
                     echo '</tbody></table>';
                 }
             }
             ?>
-        </section>
-
+        </div>
     </body>
 
 </html>
