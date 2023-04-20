@@ -60,13 +60,31 @@ section {
 
 /* TABLE */
 table {
-    border-spacing: 11px;
     border: solid gray 3px;
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+    border-spacing: 0;
 }
 
 thead.table_eventname_header {
     background: gray;
+    color: white;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
     display: table-caption;
+}
+
+.table_eventname_header th {
+    padding: 5px;
+
+}
+
+th:not(.table_eventname_header th) {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+td,
+th:not(.table_eventname_header th) {
+    border: solid gray 1px;
+    padding: 10px;
 }
 
 /* BUTTONS */

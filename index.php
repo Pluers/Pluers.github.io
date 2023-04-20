@@ -49,6 +49,7 @@
                 }
             }
             ?>
+            <!-- LIST OF MONTHS -->
             <form action="" method="post">
                 <i class="fluent-icons-filled-20">calendar_month</i>
                 <select name="select_month_list" id="month">
@@ -69,17 +70,12 @@
                 <button type="submit" name="select_month" value="Submit">Select</button>
             </form>
 
-            <!-- SELECT * FROM band, event INNER JOIN band_has_event WHERE band_has_event.event_idevent = event.idevent AND band_has_event.band_idband = band.idband; -->
-
-
             <?php
-            // QUERY FOR AMOUNT OF EVENTS
             if (isset($selectedmonth)) {
+                // QUERY FOR AMOUNT OF EVENTS
                 $resultofevents = mysqli_query($db, "SELECT * FROM event WHERE MONTH(date) = $selectedmonth;");
-                $resultofbands = mysqli_query($db, "SELECT * FROM band, event JOIN band_has_event WHERE band_has_event.event_idevent = event.idevent AND band_has_event.band_idband = band.idband AND MONTH(date) = $selectedmonth LIMIT 3;");
 
-                // AMOUNT OF TABLES
-                // list of events in tables.
+                // AMOUNT OF TABLES FOR EVENTS
                 while ($table = mysqli_fetch_array($resultofevents)) {
                     echo '<br /><table class="table table-bordered table-condensed">';
                     echo '<thead class="table_eventname_header"><tr>';
@@ -89,21 +85,19 @@
                     echo '<th>' . 'Entree: €' . $table['price'] . '</th>';
                     echo '</tr></thead>';
                     echo '<thead><tr>';
-                    echo '<th>bandname</th>';
-                    echo '<th>genre</th>';
-                    echo '<th>origin</th>';
-                    echo '<th>description</th>';
+                    echo '<th>Bandnaam</th>';
+                    echo '<th>Genre</th>';
+                    echo '<th>Herkomst</th>';
+                    echo '<th>Omschrijving</th>';
                     echo '</tr></thead>';
                     echo '<tbody>';
 
-                    // if event_has_band id is the same as tableid then add rows of bands. 
-                    while ($row = mysqli_fetch_array($resultofbands)) {
-                        echo " " . $row['event_idevent'];
-                        echo " " . $row['idevent'];
-                        echo " " . $row['band_idband'];
-                        echo " " . $row['idband'];
-                        echo "<br>";
-                        if ($row['idevent'] == $row['event_idevent']) {
+                    // ↓ Has to be made otherwise the query won't be accepted 
+                    $tableid = $table['idevent'];
+                    $resultofbandandevents = mysqli_query($db, "SELECT event_idevent, bandname, genre, herkomst, omschrijving FROM event, band JOIN band_has_event WHERE band_has_event.event_idevent = event.idevent AND band_has_event.band_idband = band.idband AND $tableid = idevent;");
+                    while ($row = mysqli_fetch_array($resultofbandandevents)) {
+                        // if the id's are both the same, show the bands in a list
+                        if ($table['idevent'] == $table['idevent']) {
                             echo '<tr>';
                             echo "<td>" . $row['bandname'] . "</td>";
                             echo "<td>" . $row['genre'] . "</td>";
@@ -111,11 +105,7 @@
                             echo "<td>" . $row['omschrijving'] . "</td>";
                             echo '</tr>';
                         }
-
-
                     }
-
-
                     echo '</tbody></table>';
                 }
             }
